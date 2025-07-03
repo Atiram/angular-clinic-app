@@ -1,0 +1,92 @@
+<div class="doctor-form-container">
+  <h2>{{ isEditMode ? 'Редактировать Доктора' : 'Добавить Доктора' }}</h2>
+
+  <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">Имя:</label>
+      <input type="text" id="firstName" formControlName="firstName">
+      <div *ngIf="doctorForm.get('firstName')?.invalid && doctorForm.get('firstName')?.touched" class="error-message">
+        Имя обязательно.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Фамилия:</label>
+      <input type="text" id="lastName" formControlName="lastName">
+      <div *ngIf="doctorForm.get('lastName')?.invalid && doctorForm.get('lastName')?.touched" class="error-message">
+        Фамилия обязательна.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="middleName">Отчество (необязательно):</label>
+      <input type="text" id="middleName" formControlName="middleName">
+    </div>
+
+    <div class="form-group">
+      <label for="dateOfBirth">Дата рождения:</label>
+      <input type="date" id="dateOfBirth" formControlName="dateOfBirth">
+      <div *ngIf="doctorForm.get('dateOfBirth')?.invalid && doctorForm.get('dateOfBirth')?.touched" class="error-message">
+        <span *ngIf="doctorForm.get('dateOfBirth')?.errors?.['required']">Дата рождения обязательна.</span>
+        <span *ngIf="doctorForm.get('dateOfBirth')?.errors?.['futureDate']">Дата рождения не может быть в будущем.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      <div *ngIf="doctorForm.get('email')?.invalid && doctorForm.get('email')?.touched" class="error-message">
+        <span *ngIf="doctorForm.get('email')?.errors?.['required']">Email обязателен.</span>
+        <span *ngIf="doctorForm.get('email')?.errors?.['email']">Введите корректный Email.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="specialization">Специализация:</label>
+      <input type="text" id="specialization" formControlName="specialization">
+      <div *ngIf="doctorForm.get('specialization')?.invalid && doctorForm.get('specialization')?.touched" class="error-message">
+        Специализация обязательна.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="office">Кабинет:</label>
+      <input type="text" id="office" formControlName="office">
+      <div *ngIf="doctorForm.get('office')?.invalid && doctorForm.get('office')?.touched" class="error-message">
+        Кабинет обязателен.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="careerStartYear">Год начала карьеры:</label>
+      <input type="number" id="careerStartYear" formControlName="careerStartYear">
+      <div *ngIf="doctorForm.get('careerStartYear')?.invalid && doctorForm.get('careerStartYear')?.touched" class="error-message">
+        <span *ngIf="doctorForm.get('careerStartYear')?.errors?.['required']">Год начала карьеры обязателен.</span>
+        <span *ngIf="doctorForm.get('careerStartYear')?.errors?.['min'] || doctorForm.get('careerStartYear')?.errors?.['max']">Введите корректный год.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Статус:</label>
+      <select id="status" formControlName="status">
+        <option *ngFor="let status of doctorStatuses; let i = index" [value]="i">
+          {{ status }}
+        </option>
+      </select>
+      <div *ngIf="doctorForm.get('status')?.invalid && doctorForm.get('status')?.touched" class="error-message">
+        Статус обязателен.
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="api-error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="doctorForm.invalid">
+        {{ isEditMode ? 'Сохранить изменения' : 'Добавить доктора' }}
+      </button>
+      <button type="button" (click)="onCancel()">Отмена</button>
+    </div>
+  </form>
+</div>

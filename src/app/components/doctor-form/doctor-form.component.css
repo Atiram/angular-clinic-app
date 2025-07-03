@@ -1,0 +1,101 @@
+/* src/app/components/doctor-form/doctor-form.component.css */
+.doctor-form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select {
+  width: calc(100% - 20px); /* Учитываем padding */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box; /* Чтобы padding не увеличивал общую ширину */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.api-error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px; /* Промежуток между кнопками */
+  margin-top: 30px;
+}
+
+.form-actions button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover:not([disabled]) {
+  background-color: #0056b3;
+}
+
+.form-actions button[type="submit"][disabled] {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.form-actions button[type="button"] { /* Для кнопки "Отмена" */
+  background-color: #6c757d;
+  color: white;
+}
+
+.form-actions button[type="button"]:hover {
+  background-color: #5a6268;
+}

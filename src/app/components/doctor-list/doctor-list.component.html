@@ -1,0 +1,100 @@
+<div class="doctor-list-container">
+  <h2>Список Докторов</h2>
+
+  <div class="controls">
+    <div class="search-input">
+      <input type="text" [(ngModel)]="currentParams.searchValue" placeholder="Поиск по имени/фамилии" (keyup.enter)="onSearch()">
+      <button (click)="onSearch()">Найти</button>
+    </div>
+
+    <div class="action-buttons">
+      <button class="add-button" routerLink="/doctors/new">Добавить доктора</button>
+    </div>
+
+    <div class="page-size-select">
+      <label for="pageSize">Докторов на страницу:</label>
+      <select id="pageSize" (change)="onPageSizeChange($event)" [ngModel]="currentParams.pageSize">
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="50">50</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="doctor-table">
+    <thead>
+      <tr>
+        <th (click)="onSort(doctorSortingParams.LastName)">
+          Фамилия
+          <span *ngIf="currentParams.sortParameter === doctorSortingParams.LastName">
+            {{ currentParams.isDescending ? '&#9660;' : '&#9650;' }}
+          </span>
+        </th>
+        <th (click)="onSort(doctorSortingParams.FirstName)">
+          Имя
+          <span *ngIf="currentParams.sortParameter === doctorSortingParams.FirstName">
+            {{ currentParams.isDescending ? '&#9660;' : '&#9650;' }}
+          </span>
+        </th>
+        <th (click)="onSort(doctorSortingParams.Specialization)">
+          Специализация
+          <span *ngIf="currentParams.sortParameter === doctorSortingParams.Specialization">
+            {{ currentParams.isDescending ? '&#9660;' : '&#9650;' }}
+          </span>
+        </th>
+        <th (click)="onSort(doctorSortingParams.Office)">
+          Кабинет
+          <span *ngIf="currentParams.sortParameter === doctorSortingParams.Office">
+            {{ currentParams.isDescending ? '&#9660;' : '&#9650;' }}
+          </span>
+        </th>
+        <th (click)="onSort(doctorSortingParams.Status)">
+          Статус
+          <span *ngIf="currentParams.sortParameter === doctorSortingParams.Status">
+            {{ currentParams.isDescending ? '&#9660;' : '&#9650;' }}
+          </span>
+        </th>
+        <th (click)="onSort(doctorSortingParams.CreatedAt)">
+          Дата создания
+          <span *ngIf="currentParams.sortParameter === doctorSortingParams.CreatedAt">
+            {{ currentParams.isDescending ? '&#9660;' : '&#9650;' }}
+          </span>
+        </th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doctor of doctors">
+        <td>{{ doctor.lastName }}</td>
+        <td>{{ doctor.firstName }}</td>
+        <td>{{ doctor.specialization }}</td>
+        <td>{{ doctor.office }}</td>
+        <td>{{ doctor.status }}</td>
+        <td>{{ doctor.createdAt | date:'short' }}</td>
+        <td>
+          <button class="edit-button" [routerLink]="['/doctors/edit', doctor.id]">Редактировать</button>
+          <button class="delete-button" (click)="deleteDoctor(doctor.id)">Удалить</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination" *ngIf="pagedResult && pagedResult.totalPages > 1">
+    <button (click)="onPageChange(pagedResult.currentPage - 1)" [disabled]="pagedResult.currentPage === 1">
+      Предыдущая
+    </button>
+    <button *ngFor="let page of pageNumbers"
+            (click)="onPageChange(page)"
+            [class.active]="page === pagedResult.currentPage">
+      {{ page }}
+    </button>
+    <button (click)="onPageChange(pagedResult.currentPage + 1)" [disabled]="pagedResult.currentPage === pagedResult.totalPages">
+      Следующая
+    </button>
+  </div>
+
+  <div *ngIf="!doctors || doctors.length === 0">
+    <p>Докторов не найдено.</p>
+  </div>
+</div>
