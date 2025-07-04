@@ -24,7 +24,6 @@ export enum DoctorStatus {
 }
 export interface PagedResult<T> {
   results: T[];
-  currentPage: number;
   pageSize: number;
   totalCount: number;
   totalPages: number;

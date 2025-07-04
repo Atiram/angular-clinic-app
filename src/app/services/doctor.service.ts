@@ -66,8 +66,52 @@ export class DoctorService {
     return this.http.post<Doctor>(this.apiUrl, formData);
   }
 
-  updateDoctor(doctor: Doctor): Observable<Doctor> {
-    return this.http.put<Doctor>(this.apiUrl, doctor);
+  // updateDoctor(doctor: Doctor): Observable<Doctor> {
+  //   return this.http.put<Doctor>(this.apiUrl, doctor);
+  // }
+
+   updateDoctor(doctorData: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    middleName?: string;
+    dateOfBirth: string; // "YYYY-MM-DD"
+    email: string;
+    specialization: string;
+    office: string;
+    careerStartYear: number;
+    status: number; // Enum DoctorStatus
+  }
+   ): Observable<Doctor> {
+    const formData = new FormData();
+    // Обязательно добавьте Id!
+    formData.append('id', doctorData.id);
+    formData.append('firstName', doctorData.firstName);
+    formData.append('lastName', doctorData.lastName);
+    formData.append('middleName', doctorData.middleName || '');
+    formData.append('dateOfBirth', doctorData.dateOfBirth);
+    formData.append('email', doctorData.email);
+    formData.append('specialization', doctorData.specialization);
+    formData.append('office', doctorData.office);
+    formData.append('careerStartYear', doctorData.careerStartYear.toString());
+    formData.append('status', doctorData.status.toString());
+
+    // Добавьте файл, если он есть
+    // if (doctorData.formfile) {
+    //   formData.append('formfile', doctorData.formfile, doctorData.formfile.name);
+    // } else {
+    //     // Если файл не выбран, но поле Formfile существует в UpdateDoctorRequest,
+    //     // возможно, вам нужно явно отправить пустой файл или сигнал об его отсутствии,
+    //     // в зависимости от логики бэкенда.
+    //     // Если бэкенд ожидает Formfile, даже если он null, можно отправить пустой Blob:
+    //     // formData.append('formfile', new Blob([]), '');
+    //     // Или просто не добавлять поле, если бэкенд обрабатывает его как опциональное.
+    //     // В вашем случае, если Formfile? означает опциональность, то не отправляем.
+    // }
+
+
+    // PUT-запрос, отправляем FormData
+    return this.http.put<Doctor>(this.apiUrl, formData); // PUT на базовый URL
   }
 
   deleteDoctor(id: string): Observable<void> {
